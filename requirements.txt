@@ -5,4 +5,3 @@ numpy
 plotly
 ta
 scikit-learn
-tensorflow
