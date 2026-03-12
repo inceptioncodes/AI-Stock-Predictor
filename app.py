@@ -49,7 +49,6 @@ st.markdown("<h1 style='color:grey; text-align:center;'>AI Stock Predictor</h1>"
 
 # Live market ticker
 st.subheader("Live Market Prices")
-
 tickers = ["AAPL", "TSLA", "MSFT", "GOOGL", "AMZN"]
 
 cols = st.columns(len(tickers))
@@ -58,19 +57,28 @@ for i, t in enumerate(tickers):
 
     data = yf.download(t, period="1d", interval="1m")
 
-    data.columns = data.columns.get_level_values(0)
+    if not data.empty:
 
-    price = float(data["Close"].iloc[-1])
-    prev = float(data["Close"].iloc[0])
+        data.columns = data.columns.get_level_values(0)
 
-    change = price - prev
+        price = float(data["Close"].iloc[-1])
+        prev = float(data["Close"].iloc[0])
 
-    cols[i].metric(
-        label=t,
-        value=f"${round(price,2)}",
-        delta=round(change,2)
-    )
+        change = price - prev
 
+        cols[i].metric(
+            label=t,
+            value=f"${round(price,2)}",
+            delta=round(change,2)
+        )
+
+    else:
+
+        cols[i].metric(
+            label=t,
+            value="No Data",
+            delta="0"
+        )
 # Market status
 now = datetime.datetime.now()
 if 9 <= now.hour <= 16:
