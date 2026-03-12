@@ -107,10 +107,12 @@ http://localhost:8501
 ---
 Author
 
-Dev
+Debjit Praharaj
+
 GitHub: https://github.com/inceptioncodes
 
 License
 
 This project is open-source and available under the MIT License.
+
 
