@@ -2,8 +2,11 @@ import streamlit as st
 import yfinance as yf
 import datetime
 from indicators import add_indicators
-from lstm_model import get_data, train_lstm
-
+try:
+    from lstm_model import get_data, train_lstm
+    AI_AVAILABLE = True
+except:
+    AI_AVAILABLE = False
 # Page config
 st.markdown("""
 <style>
@@ -196,20 +199,20 @@ st.subheader("RSI Indicator")
 
 st.line_chart(df["RSI"])
 st.subheader("AI Stock Prediction (LSTM)")
+if AI_AVAILABLE:
 
-X, y, scaler, data = get_data(ticker)
+    X, y, scaler, data = get_data(ticker)
+    model = train_lstm(X, y)
 
-model = train_lstm(X, y)
+    last_60 = X[-1].reshape(1, X.shape[1], 1)
 
-last_60 = X[-1].reshape(1, X.shape[1], 1)
+    prediction = model.predict(last_60)
+    predicted_price = scaler.inverse_transform(prediction)[0][0]
 
-prediction = model.predict(last_60)
-predicted_price = scaler.inverse_transform(prediction)[0][0]
+    st.metric("AI Predicted Next Price", f"${predicted_price:.2f}")
 
-st.metric(
-    "Predicted Next Price",
-    f"${predicted_price:.2f}"
-)
+else:
+    st.info("AI prediction module not available in deployed environment.")
 
 # Dataset preview
 st.subheader("Dataset Preview")
