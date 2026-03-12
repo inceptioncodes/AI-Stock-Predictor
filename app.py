@@ -80,12 +80,18 @@ for i, t in enumerate(tickers):
             delta="0"
         )
 # Market status
-now = datetime.datetime.now()
-if 9 <= now.hour <= 16:
+import pytz
+
+ny = pytz.timezone("America/New_York")
+now = datetime.datetime.now(ny)
+
+market_open = now.replace(hour=9, minute=30, second=0)
+market_close = now.replace(hour=16, minute=0, second=0)
+
+if market_open <= now <= market_close:
     status = "🟢 Market Status: OPEN"
 else:
     status = "🔴 Market Status: CLOSED"
-
 st.markdown(
     f"""
     <div style="
