@@ -43,13 +43,16 @@ The application fetches live stock market data, visualizes price trends, and app
 ---
 
 ## Project Structure
+
+```
 AI-Stock-Predictor
 │
-├── app.py # Main Streamlit dashboard
-├── indicators.py # Technical indicators (RSI, Moving Average)
-├── lstm_model.py # AI prediction model
-├── requirements.txt # Dependencies
+├── app.py              # Main Streamlit dashboard
+├── indicators.py       # Technical indicators (RSI, Moving Average)
+├── lstm_model.py       # AI prediction model
+├── requirements.txt    # Dependencies
 └── README.md
+```
 
 ## Installation
 
@@ -110,3 +113,4 @@ GitHub: https://github.com/inceptioncodes
 License
 
 This project is open-source and available under the MIT License.
+
